@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #New applications local apps
     'posts',
+    'users',
 
 ]
 

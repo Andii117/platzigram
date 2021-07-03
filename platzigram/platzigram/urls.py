@@ -7,6 +7,7 @@ from posts import views as posts_views
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('hello-word/', local_views.hello_word ),
     path('sorted/', local_views.hi ),
     path('hi/<str:name>/<int:age>', local_views.say_hi),
