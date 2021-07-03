@@ -10,7 +10,7 @@ from django.db.models.fields.related import OneToOneField
 class Profile(models.Model):
     #Profile models
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
 
     website = models.URLField(max_length=200, blank=True)
     biography = models.TextField(blank=True)
