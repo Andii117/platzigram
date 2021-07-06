@@ -3,6 +3,8 @@ from datetime import date, datetime
 from django.http import HttpResponse
 import json
 
+from django.http.response import ResponseHeaders
+
 
 def hello_word(request):
     return HttpResponse('Hello Word!!!, oh hi, current server time is {now}'.format(
