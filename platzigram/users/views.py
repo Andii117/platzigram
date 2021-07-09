@@ -1,5 +1,6 @@
+# Django
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 
 #Exception
@@ -7,9 +8,44 @@ from django.db.utils import IntegrityError
 
 #Models
 from django.contrib.auth.models import User
-from users.models import Profile
+
+#Forms
+from users.forms import ProfileForms
 
 # Create your views here.
+
+def update_profile(request):
+    #Update a user's profile view
+    #renderea la vista del template en la carpeta User el archivo update_profile.html
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        #Obtenemos la información del formulario y el archivo de imagen
+        form = ProfileForms(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            profile.website = data['website']
+            profile.phone_number = data['phone_number']
+            profile.biography = data['biography']
+            profile.picture = data['picture']
+            profile.save()
+
+            return redirect('update_profile')
+
+    else:
+        form = ProfileForms()
+
+    return render(
+        request=request,
+        template_name='users/update_profile.html',
+        context={
+            'profile': profile,
+            'user': request.user,
+            'form': form
+        }
+    )
+
 
 #Controlador vista login
 def login_view(request):
@@ -73,3 +109,5 @@ def singup_view(request):
 
     #renderea la pagina signup de la carpeta templates
     return render(request, 'users/signup.html')
+
+

@@ -1,4 +1,5 @@
 
+from os import name
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
@@ -19,4 +20,5 @@ urlpatterns = [
     path('users/login/', users_views.login_view ,name='login'),
     path('users/logout/',users_views.logout_view ,name='logout'),
     path('users/signup/',users_views.singup_view ,name='signup'),
+    path('users/me/profile/',users_views.update_profile ,name='update_profile'),
 ]# + static(settings.MEDIA_URL, document.root = settings.MEDIA_ROOT)
