@@ -19,7 +19,7 @@ class ProfileAdmin(admin.ModelAdmin):
     )
 
     list_filter = ('create', 'modifie')
-    #pass
+
 
     fieldsets = (
         ('Profile', {
