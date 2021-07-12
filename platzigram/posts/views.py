@@ -61,7 +61,7 @@ def create_post(request):
             #Guarda la información del formulario si es valido
             form.save()
             #Retorna la vista feed
-            return redirect('feed')
+            return redirect('posts:feed')
     else:
         #Si es un formulario vacio
         form= PostForm()

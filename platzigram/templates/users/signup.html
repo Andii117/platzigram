@@ -8,7 +8,7 @@
 
 
 
-    <form action="{% url 'signup'%}" method="post">
+    <form action="{% url 'users:signup'%}" method="post">
         {% csrf_token %}
         {# Usa el formulario y django renderea la ifnormación #}
         {{ form.as_p }}

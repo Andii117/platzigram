@@ -28,8 +28,8 @@ class ProfileCompletionMiddleware:
                 if not profile.picture or not profile.biography:
                     #Validamos que el request no tiene la pagína que se desea cargar
                     #importamos la función de reverse que obtiene una url a partir del name
-                    if request.path not in  [reverse('update_profile'),reverse('logout')]:
-                        return redirect('update_profile')
+                    if request.path not in  [reverse('users:update_profile'),reverse('users:logout')]:
+                        return redirect('users:update_profile')
 
         response = self.get_response(request)
         return response

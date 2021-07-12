@@ -25,7 +25,7 @@ def update_profile(request):
             profile.picture = data['picture']
             profile.save()
 
-            return redirect('update_profile')
+            return redirect('users:update_profile')
 
     else:
         form = ProfileForm()
@@ -54,7 +54,7 @@ def login_view(request):
         if user :
             login(request, user)
             #este es el name de la ruta en el arhivo urls.py  
-            return redirect('feed')
+            return redirect('posts:feed')
         else:
             return render(request, 'users/login.html', {'error': 'invalid username and password'})
     #Renderea la pagina login.html de la carpeta templates
@@ -65,7 +65,7 @@ def login_view(request):
 def logout_view(request):
     #logout a user
     logout(request)
-    return redirect('login')
+    return redirect('users:login')
 
 #Controlador vista sing up
 def singup_view(request):
@@ -75,7 +75,7 @@ def singup_view(request):
 
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('users:login')
     else:
         form = SignupForm()
     return render(
