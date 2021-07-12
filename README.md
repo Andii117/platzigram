@@ -1,6 +1,5 @@
 # PLATZIGRAM
 
-_Acá va un párrafo que describa lo que es el proyecto_
 En este proyecto con Django y Python se creó una página web para practicar lo visto en el curso de Django en platzi: https://platzi.com/clases/django/
 
 ## Comenzando 🚀
