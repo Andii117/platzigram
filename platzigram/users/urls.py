@@ -7,11 +7,11 @@ from users import views
 urlpatterns = [
 
     #Posts
-    #path(
-    #    route='profile:<str:username>/',
-    #    view= TemplateView.as_view(templatename='users/detail.html'),
-    #    name='detail'
-    #),
+    path(
+        route='<str:username>/',
+        view= TemplateView.as_view(template_name='users/detail.html'),
+        name='detail'
+    ),
 
     #Managent
     #path for Users
