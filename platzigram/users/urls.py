@@ -1,17 +1,9 @@
 #Django
 from django.urls import path
-from django.views.generic import TemplateView
 #Posts
 from users import views 
 
 urlpatterns = [
-
-    #Posts
-    path(
-        route='<str:username>/',
-        view= TemplateView.as_view(template_name='users/detail.html'),
-        name='detail'
-    ),
 
     #Managent
     #path for Users
@@ -31,4 +23,15 @@ urlpatterns = [
         route ='me/profile/',
         view  = views.update_profile ,
         name  ='update_profile'),
+
+
+    #Posts
+    #Siempre colocar los paths dinamicos de ultimas 
+    #para que no cause un Bug encontrando las demas 
+    #rutas
+    path(
+        route='<str:username>/',
+        view= views.UserDetailView.as_view(),
+        name='detail'
+    ),
 ]

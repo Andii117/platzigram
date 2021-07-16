@@ -8,7 +8,7 @@ urlpatterns = [
 #path for Posts
     path(
         route='',
-        view=views.list_posts,
+        view=views.PostsFeedView.as_view(),
         name='feed'
     ),
 
