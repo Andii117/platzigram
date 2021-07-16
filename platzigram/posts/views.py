@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView,DetailView
 #Utilities
 from datetime import datetime
 #Forms
@@ -51,11 +51,20 @@ class PostsFeedView(LoginRequiredMixin, ListView):
     model = Post
     #Ordenamiento por creación desendientemente
     ordering = ('-created',)
-    #Página la vista de posts a 2  
-    paginate_by = 2
+    #Página la vista de posts a 30 
+    paginate_by = 30
     #Se nombra el contexto a posts
     context_object_name = 'posts'
 
+class PostDetailView(LoginRequiredMixin, DetailView):
+    #Return post detail
+
+    #Template al cual se va a redirigie la petición
+    template_name = 'posts/detail.html'
+    #Queryset de donde obtiene la información
+    queryset = Post.objects.all()
+    #Contexto para mostrar los datos
+    context_object_name = 'post'
 
 @login_required
 def create_post(request):
