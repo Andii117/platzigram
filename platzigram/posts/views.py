@@ -45,10 +45,15 @@ posts = [
 """
 class PostsFeedView(LoginRequiredMixin, ListView):
     #Return all published posts
+    #Ubicación del template a usar
     template_name = 'posts/feed.html'
+    #Se usa el modelo de Post
     model = Post
+    #Ordenamiento por creación desendientemente
     ordering = ('-created',)
+    #Página la vista de posts a 2  
     paginate_by = 2
+    #Se nombra el contexto a posts
     context_object_name = 'posts'
 
 
