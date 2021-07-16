@@ -144,3 +144,7 @@ STATICFILES_FINDERS = [
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
 LOGIN_URL = '/users/login/'
+#Se debe configurar cuando se usa el auth_views.LoginView de django.contrib.auth 
+#debido a que si no lo manda por defecto a accounts/profile
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = LOGIN_URL

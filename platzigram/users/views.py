@@ -1,10 +1,11 @@
 # Django
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse,reverse_lazy
 from django.views.generic import DetailView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import views as auth_views
 # Models
 from django.contrib.auth.models import User
 from django.views.generic.edit import UpdateView
@@ -14,8 +15,6 @@ from users.models import Profile
 #Forms
 from users.forms import SignupForm
 
-# Forms
-from users.forms import ProfileForm
 
 #Lo que va encerrado dentro del parencesis es la forma de extender clases
 class UserDetailView(LoginRequiredMixin,  DetailView):
@@ -53,32 +52,14 @@ class UpdateProfileView(LoginRequiredMixin,UpdateView):
         return reverse('users:detail', kwargs={'username': username})
 
 
-
-
-#Controlador vista login
-def login_view(request):
+class LoginView(auth_views.LoginView):
     #Login view
-    if request.method == 'POST':
-        #Obtiene el username y password del login
-        username = request.POST['username']
-        password = request.POST['password']
-        #Función para obtener el login autenticado
-        user = authenticate(request, username=username, password=password)
-        if user :
-            login(request, user)
-            #este es el name de la ruta en el arhivo urls.py  
-            return redirect('posts:feed')
-        else:
-            return render(request, 'users/login.html', {'error': 'invalid username and password'})
-    #Renderea la pagina login.html de la carpeta templates
-    return render(request, 'users/login.html')
+    template_name = 'users/login.html'
 
-#Controlador vista logout
-@login_required
-def logout_view(request):
-    #logout a user
-    logout(request)
-    return redirect('users:login')
+
+class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+    #Logout view
+    template_name = 'users/logged_out.html'
 
 
 
