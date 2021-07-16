@@ -1,10 +1,8 @@
 #Django
-from django.http.response import HttpResponse
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView,DetailView
+from django.views.generic import CreateView,ListView,DetailView
+from django.urls import reverse_lazy
+
 #Utilities
 from datetime import datetime
 #Forms
@@ -45,6 +43,7 @@ posts = [
 """
 class PostsFeedView(LoginRequiredMixin, ListView):
     #Return all published posts
+
     #Ubicación del template a usar
     template_name = 'posts/feed.html'
     #Se usa el modelo de Post
@@ -66,31 +65,25 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     #Contexto para mostrar los datos
     context_object_name = 'post'
 
-@login_required
-def create_post(request):
-    #Create new posts view
-    if request.method == 'POST':
-        #Obtiene la información del formulario y los archivo dentro de el
-        #request.POST( Info formulario) request.FILES(Info archivo (foto))
-        form = PostForm(request.POST, request.FILES)
-        #valida el formulario
-        if form.is_valid():
-            #Guarda la información del formulario si es valido
-            form.save()
-            #Retorna la vista feed
-            return redirect('posts:feed')
-    else:
-        #Si es un formulario vacio
-        form= PostForm()
-    #Al final devuelve la vista news.html
-    return render(
-        request,
-        template_name='posts/news.html',
-        context={
-            'form': form,
-            'user': request.user,
-            'profile': request.user.profile
-        }
-    )
+class CreatePostView(LoginRequiredMixin, CreateView):
+    #Create a new posts
+
+    #Template al cual se va a redirigie la petición
+    template_name = 'posts/new.html'
+    #Queryset de donde obtiene la información
+    form_class  = PostForm
+    #El reverse_lazy es para mostrar la pagína pero únicamente cuando lo encesite
+    success_url = reverse_lazy('posts:feed')
+    
+    #Contexto (sobrecarga de métodos)
+    def get_context_data(self, **kwargs) :
+        #Add user and profile context
+        #Obtiene el contexto de la página
+        context =  super().get_context_data(**kwargs)
+        #Adiciona al contexto el usuario 
+        context['user'] = self.request.user
+        #Adiciona al contexto el profile
+        context['profile'] = self.request.user.profile
+        return context
     
     
